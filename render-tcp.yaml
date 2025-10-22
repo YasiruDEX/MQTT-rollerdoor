@@ -1,0 +1,20 @@
+# Render TCP Service Configuration for MQTT
+# This configuration deploys MQTT as a TCP service (not Web Service)
+# TCP services support non-HTTP protocols like MQTT
+
+services:
+  - type: pserv  # Private Service (TCP)
+    name: mqtt-broker-tcp
+    env: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    # No health checks needed for TCP services
+    # Render will monitor the process directly
+    ports:
+      - protocol: tcp
+        containerPort: 1883
+      - protocol: tcp
+        containerPort: 9001
+    # Render will assign external ports automatically
+    # You'll get a URL like: mqtt-xxxxx.render.com:XXXXX
