@@ -19,6 +19,7 @@ pip install paho-mqtt
 ## Scripts Overview
 
 ### 1. `mqtt_publisher.py` - Publish Messages
+
 Publishes messages to the MQTT broker.
 
 **Basic Usage:**
@@ -38,6 +39,7 @@ python mqtt_publisher.py --host your-service-name.onrender.com --port 1883 --use
 ```
 
 **Arguments:**
+
 - `--host`: MQTT broker host (default: localhost)
 - `--port`: MQTT broker port (default: 1883)
 - `--username`: MQTT username (default: admin)
@@ -49,6 +51,7 @@ python mqtt_publisher.py --host your-service-name.onrender.com --port 1883 --use
 - `--count`: Number of messages to publish (default: 10)
 
 ### 2. `mqtt_subscriber.py` - Subscribe to Topics
+
 Subscribes to and listens for messages from the MQTT broker.
 
 **Basic Usage:**
@@ -68,6 +71,7 @@ python mqtt_subscriber.py --host your-service-name.onrender.com --port 1883 --us
 ```
 
 **Arguments:**
+
 - `--host`: MQTT broker host (default: localhost)
 - `--port`: MQTT broker port (default: 1883)
 - `--username`: MQTT username (default: admin)
@@ -77,6 +81,7 @@ python mqtt_subscriber.py --host your-service-name.onrender.com --port 1883 --us
 - `--all`: Subscribe to all topics (#)
 
 ### 3. `mqtt_sensor_simulator.py` - Simulate IoT Sensors
+
 Simulates multiple IoT sensors publishing data to the MQTT broker.
 
 **Basic Usage:**
@@ -96,6 +101,7 @@ python mqtt_sensor_simulator.py --topic-base "iot/devices" --sensors 3 --interva
 ```
 
 **Arguments:**
+
 - `--host`: MQTT broker host (default: localhost)
 - `--port`: MQTT broker port (default: 1883)
 - `--username`: MQTT username (default: admin)
@@ -110,11 +116,13 @@ python mqtt_sensor_simulator.py --topic-base "iot/devices" --sensors 3 --interva
 ### Scenario 1: Local Testing (Terminal 1 & 2)
 
 **Terminal 1 - Start Subscriber:**
+
 ```bash
 python mqtt_subscriber.py --topic "test/#"
 ```
 
 **Terminal 2 - Start Publisher:**
+
 ```bash
 python mqtt_publisher.py --message "Test message"
 ```
@@ -124,11 +132,13 @@ Expected: Terminal 1 should receive the message.
 ### Scenario 2: Sensor Simulation
 
 **Terminal 1 - Subscribe to sensor data:**
+
 ```bash
 python mqtt_subscriber.py --topic "sensors/#"
 ```
 
 **Terminal 2 - Simulate sensors:**
+
 ```bash
 python mqtt_sensor_simulator.py --sensors 3 --interval 2
 ```
@@ -138,16 +148,19 @@ Expected: Terminal 1 should display sensor data every 2 seconds from 3 different
 ### Scenario 3: Multiple Topics
 
 **Terminal 1 - Subscribe to all topics:**
+
 ```bash
 python mqtt_subscriber.py --all
 ```
 
 **Terminal 2 - Publish to different topics:**
+
 ```bash
 python mqtt_publisher.py --topic "home/living-room/temperature" --message "22.5"
 ```
 
 **Terminal 3 - Another publisher:**
+
 ```bash
 python mqtt_publisher.py --topic "home/kitchen/humidity" --message "45.2"
 ```
@@ -159,6 +172,7 @@ Expected: Terminal 1 should see messages from both publishers.
 Once deployed to Render.com, test with:
 
 **Terminal 1 - Subscribe:**
+
 ```bash
 python mqtt_subscriber.py \
   --host your-service-name.onrender.com \
@@ -169,6 +183,7 @@ python mqtt_subscriber.py \
 ```
 
 **Terminal 2 - Publish:**
+
 ```bash
 python mqtt_publisher.py \
   --host your-service-name.onrender.com \
@@ -182,15 +197,18 @@ python mqtt_publisher.py \
 ## Troubleshooting
 
 ### Connection Refused
+
 - Check if broker is running
 - Verify hostname and port
 - Check firewall settings
 
 ### Authentication Failed
+
 - Verify username and password are correct
 - Make sure password file exists on broker
 
 ### Topics Not Received
+
 - Check topic names match exactly (case-sensitive)
 - Verify QoS levels are compatible
 - Check broker logs
@@ -199,7 +217,6 @@ python mqtt_publisher.py \
 
 - `#` - Matches any number of levels (must be at end)
   - `sensors/#` matches `sensors/temp`, `sensors/humidity`, `sensors/room1/temp`, etc.
-  
 - `+` - Matches exactly one level
   - `sensors/+/temp` matches `sensors/room1/temp`, `sensors/room2/temp` but not `sensors/room1/level2/temp`
 

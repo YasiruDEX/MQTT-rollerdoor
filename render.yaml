@@ -5,16 +5,11 @@ services:
     plan: starter
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    envVars:
-      - key: PORT
-        value: 1883
-    # Health check endpoint (optional, Mosquitto doesn't have HTTP endpoint by default)
-    healthCheckPath: /
-    # Render will assign a port, but we need to use MQTT ports
+    # MQTT doesn't use HTTP, disable health checks
+    healthCheckPath: null
+    # Let Render.com manage ports
     ports:
       - protocol: tcp
         containerPort: 1883
-        externalPort: 1883
       - protocol: tcp
         containerPort: 9001
-        externalPort: 9001

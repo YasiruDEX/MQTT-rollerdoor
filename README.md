@@ -31,6 +31,7 @@ mosquitto_passwd -c passwd admin
 ```
 
 The `passwd` file should look like:
+
 ```
 admin:$7$101$xxxxxxxxxxxxx...
 ```
@@ -43,6 +44,7 @@ admin:$7$101$xxxxxxxxxxxxx...
 2. Click **"New +"** → **"Web Service"**
 3. Connect your GitHub repository
 4. Configure the service:
+
    - **Name**: mqtt-broker (or your preferred name)
    - **Environment**: Docker
    - **Plan**: Starter or higher
@@ -50,6 +52,7 @@ admin:$7$101$xxxxxxxxxxxxx...
    - **Dockerfile Path**: `./Dockerfile`
 
 5. **Important**: Add the following in the "Advanced" section:
+
    - Set health check to disabled (MQTT doesn't have HTTP endpoints)
    - Configure environment variables if needed
 
@@ -111,7 +114,7 @@ PubSubClient client(espClient);
 void setup() {
   client.setServer(mqtt_server, mqtt_port);
   client.connect("ESP32Client", mqtt_user, mqtt_password);
-  
+
   if (client.connected()) {
     client.publish("sensor/status", "online");
   }
@@ -123,6 +126,7 @@ void setup() {
 ### Mosquitto Configuration (`mosquitto.conf`)
 
 The configuration file includes:
+
 - **Authentication**: Password-based authentication enabled
 - **Persistence**: Message persistence enabled
 - **Logging**: Comprehensive logging to file and stdout
@@ -156,16 +160,19 @@ log_type all
 ## Troubleshooting
 
 ### Connection Refused
+
 - Check if the service is running on Render dashboard
 - Verify port numbers (1883 for MQTT, 9001 for WebSocket)
 - Check firewall settings
 
 ### Authentication Failed
+
 - Verify username and password in the `passwd` file
 - Ensure the password hash was generated correctly
 - Check that `allow_anonymous false` is set in config
 
 ### Service Won't Start
+
 - Check Render logs for errors
 - Verify Docker build succeeded
 - Ensure `passwd` file has valid entries
@@ -188,6 +195,7 @@ mosquitto_pub -h localhost -p 1883 -u admin -P your-password -t "test/topic" -m 
 ## Costs
 
 Render.com pricing for MQTT broker:
+
 - **Starter Plan**: ~$7/month (512MB RAM, shared CPU)
 - **Standard Plan**: ~$25/month (2GB RAM, dedicated CPU)
 
@@ -196,6 +204,7 @@ Note: MQTT is lightweight and the Starter plan should be sufficient for most IoT
 ## Support
 
 For issues related to:
+
 - **Mosquitto**: See [Eclipse Mosquitto documentation](https://mosquitto.org/documentation/)
 - **Render.com**: See [Render documentation](https://render.com/docs)
 - **This setup**: Open an issue in this repository
