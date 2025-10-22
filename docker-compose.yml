@@ -8,6 +8,7 @@ services:
     ports:
       - "1883:1883"  # MQTT
       - "9001:9001"  # WebSocket
+      - "8080:8080"  # HTTP Health Check
     volumes:
       - mqtt-data:/mosquitto/data
       - mqtt-logs:/mosquitto/log
