@@ -5,11 +5,13 @@ services:
     plan: starter
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    # MQTT doesn't use HTTP, disable health checks
-    healthCheckPath: null
+    # Health check using HTTP on port 8080
+    healthCheckPath: /
     # Let Render.com manage ports
     ports:
       - protocol: tcp
         containerPort: 1883
       - protocol: tcp
         containerPort: 9001
+      - protocol: tcp
+        containerPort: 8080
