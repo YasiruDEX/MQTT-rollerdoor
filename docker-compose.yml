@@ -1,0 +1,20 @@
+# Docker Compose file for local testing
+services:
+  mqtt-broker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mqtt-broker
+    ports:
+      - "1883:1883"  # MQTT
+      - "9001:9001"  # WebSocket
+    volumes:
+      - mqtt-data:/mosquitto/data
+      - mqtt-logs:/mosquitto/log
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+
+volumes:
+  mqtt-data:
+  mqtt-logs:
